@@ -23,7 +23,7 @@ namespace FastBinance.BinanceApi
 
         public async Task<BinanceAccountInformation> GetAccountInformation()
         {
-            string args = $"recvWindow=6000&timestamp={GetUnixTimestamp()}";
+            string args = $"recvWindow=5000&timestamp={GetUnixTimestamp()}";
             var response = await GetDataAsync("/api/v3/account", true, RequestMethod.Get, args);
             var jsonObject = JObject.Parse(response);
             BinanceAccountInformation information = (BinanceAccountInformation)jsonObject.ToObject(typeof(BinanceAccountInformation));

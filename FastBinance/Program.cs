@@ -14,7 +14,7 @@ namespace FastBinance
             BinanceClient client = new BinanceClient("aFcKiRkCD0g9CmtsEQdach6kKR1N7wtAGu2qRHfEaczVGFjlcL1531KvHrGSYvSp", "MfmVBSgIT54oTWfUyVzQHbhkhHdHual1HPUWAPMgsaBERvKxKUI5KkaB3Yby7DQT");
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
-            var order = client.SyncWtihServer();
+            var order = await client.GetSymbolMarketDepth("BTCUSDT", 10);
 
 
 

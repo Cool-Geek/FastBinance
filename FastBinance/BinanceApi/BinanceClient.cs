@@ -61,6 +61,22 @@ namespace FastBinance.BinanceApi
             return result;
         }
 
+        public async Task<BinanceSymbolMarketDepth> GetSymbolMarketDepth(string symbol, short limit)
+        {
+            string args = $"symbol={symbol}&limit={limit}";
+            var response = await GetDataAsync("/api/v3/depth", false, RequestMethod.Get, args);
+            var jsonObject = JObject.Parse(response);
+            JToken bids = jsonObject.GetValue("bids");
+            JToken asks = jsonObject.GetValue("asks");
+            int i = 0;
+            foreach(var item in bids)
+            {
+                string s = item.ToString();
+            }
+            BinanceSymbolMarketDepth result = (BinanceSymbolMarketDepth)jsonObject.ToObject(typeof(BinanceSymbolMarketDepth));
+            return result;
+        }
+
         public async Task<BinanceSymbolPrice> GetSymbolPriceAsync(string symbol)
         {
             string args = $"symbol={symbol}";

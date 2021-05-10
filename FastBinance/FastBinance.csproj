@@ -55,6 +55,8 @@
     <Compile Include="BinanceApi\BinanceClient.cs" />
     <Compile Include="Entities\BinanceAccountInformation.cs" />
     <Compile Include="Entities\BinanceBalance.cs" />
+    <Compile Include="Entities\BinanceSymbolMarketDepth.cs" />
+    <Compile Include="Entities\BinanceSymbolOrderBook.cs" />
     <Compile Include="Entities\BinanceSymbolPrice.cs" />
     <Compile Include="Entities\BinanceSymbol24HrStatistic.cs" />
     <Compile Include="Entities\BinanceSymbol.cs" />

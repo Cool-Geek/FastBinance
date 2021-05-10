@@ -14,9 +14,8 @@ namespace FastBinance
             BinanceClient client = new BinanceClient("aFcKiRkCD0g9CmtsEQdach6kKR1N7wtAGu2qRHfEaczVGFjlcL1531KvHrGSYvSp", "MfmVBSgIT54oTWfUyVzQHbhkhHdHual1HPUWAPMgsaBERvKxKUI5KkaB3Yby7DQT");
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
-            var order = client.GetAccountInformation().Result;
+            var order = client.SyncWtihServer();
 
-            var balances = (await client.GetAccountInformation());
 
 
             watch.Stop();

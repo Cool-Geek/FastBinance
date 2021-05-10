@@ -85,14 +85,18 @@ namespace FastBinance.BinanceApi
             return response;
         }
 
-        public bool SyncWtihServer()
+        public string SyncWtihServer()
         {
-            var response = GetData("/api/v3/ping", false);
+            var response = GetData("/api/v3/time", false);
             if (response == "")
             {
-                return false;
+                return "Connection Error";
             }
-            return true;
+            else if (response.Contains("serverTime"))
+            {
+                return response.Substring(response.IndexOf(':') + 1, response.IndexOf('}') - response.IndexOf(':') - 1);
+            }
+            return string.Empty;
         }
 
         public bool TestConnectivity()

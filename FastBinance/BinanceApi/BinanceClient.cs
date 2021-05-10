@@ -85,6 +85,16 @@ namespace FastBinance.BinanceApi
             return response;
         }
 
+        public bool SyncWtihServer()
+        {
+            var response = GetData("/api/v3/ping", false);
+            if (response == "")
+            {
+                return false;
+            }
+            return true;
+        }
+
         public bool TestConnectivity()
         {
             var response = GetData("/api/v3/ping", false);

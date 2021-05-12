@@ -8,6 +8,11 @@ namespace FastBinance.Entities
 {
     public class BinanceSymbolMarketDepth
     {
+        public BinanceSymbolMarketDepth()
+        {
+            Bids = new List<BinanceSymbolOrderBook>();
+            Asks = new List<BinanceSymbolOrderBook>();
+        }
         public List<BinanceSymbolOrderBook> Bids { get; set; }
         public List<BinanceSymbolOrderBook> Asks { get; set; }
 

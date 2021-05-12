@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FastBinance.BinanceApi
@@ -63,18 +64,33 @@ namespace FastBinance.BinanceApi
 
         public async Task<BinanceSymbolMarketDepth> GetSymbolMarketDepth(string symbol, short limit)
         {
+            BinanceSymbolMarketDepth marketDepth = new BinanceSymbolMarketDepth();
             string args = $"symbol={symbol}&limit={limit}";
             var response = await GetDataAsync("/api/v3/depth", false, RequestMethod.Get, args);
             var jsonObject = JObject.Parse(response);
             JToken bids = jsonObject.GetValue("bids");
             JToken asks = jsonObject.GetValue("asks");
-            int i = 0;
-            foreach(var item in bids)
+            for(int i = 0; i < limit; i++)
             {
-                string s = item.ToString();
+                string[] bidStringArray = bids[i].ToString().Split(',');
+                string[] askStringArray = asks[i].ToString().Split(',');
+                var bidPriceValue = Regex.Match(bidStringArray[0], @"(\d+(\.\d+)?)|(\.\d+)").Value;
+                var bidQuantityValue = Regex.Match(bidStringArray[1], @"(\d+(\.\d+)?)|(\.\d+)").Value;
+                var askPriceValue = Regex.Match(askStringArray[0], @"(\d+(\.\d+)?)|(\.\d+)").Value;
+                var askQuantityValue = Regex.Match(askStringArray[1], @"(\d+(\.\d+)?)|(\.\d+)").Value;
+                marketDepth.Bids.Add(new BinanceSymbolOrderBook
+                {
+                    Price = decimal.Parse(bidPriceValue),
+                    Quantity = decimal.Parse(bidQuantityValue)
+                });
+                marketDepth.Asks.Add(new BinanceSymbolOrderBook
+                {
+                    Price = decimal.Parse(askPriceValue),
+                    Quantity = decimal.Parse(askQuantityValue)
+                });
             }
-            BinanceSymbolMarketDepth result = (BinanceSymbolMarketDepth)jsonObject.ToObject(typeof(BinanceSymbolMarketDepth));
-            return result;
+
+            return marketDepth;
         }
 
         public async Task<BinanceSymbolPrice> GetSymbolPriceAsync(string symbol)
